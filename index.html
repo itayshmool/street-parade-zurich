@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Street Parade Zürich — Die grösste Techno-Party der Welt</title>
+<meta name="description" content="Die Street Parade in Zürich: das weltgrösste Techno-Tanzfest für Friede, Freiheit, Grosszügigkeit und Toleranz. Über eine Million Menschen, Love Mobiles und Beats am Zürichsee." />
+<meta name="theme-color" content="#0a0118" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Street Parade Zürich" />
+<meta property="og:description" content="Die grösste Techno-Party der Welt — Friede, Freiheit, Liebe & Toleranz am Zürichsee." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Sora:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #0a0118;
+    --bg-2: #14052b;
+    --ink: #f4ecff;
+    --muted: #9b86c4;
+    --magenta: #ff2e9a;
+    --cyan: #00f0ff;
+    --lime: #c4ff2e;
+    --orange: #ff6b1a;
+    --violet: #8a2eff;
+    --display: "Anton", system-ui, sans-serif;
+    --body: "Sora", system-ui, sans-serif;
+    --mono: "JetBrains Mono", monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    overflow-x: hidden;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Animated gradient mesh background ===== */
+  .mesh {
+    position: fixed;
+    inset: -20% -20% -20% -20%;
+    z-index: -2;
+    filter: blur(60px);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+  .blob.b1 { width: 50vw; height: 50vw; background: var(--magenta); top: -5%; left: -5%; }
+  .blob.b2 { width: 45vw; height: 45vw; background: var(--cyan); top: 30%; right: -10%; animation-delay: -6s; }
+  .blob.b3 { width: 40vw; height: 40vw; background: var(--violet); bottom: -10%; left: 20%; animation-delay: -11s; }
+  .blob.b4 { width: 30vw; height: 30vw; background: var(--lime); top: 55%; left: 5%; animation-delay: -15s; }
+
+  @keyframes drift {
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(6vw,-4vw) scale(1.15); }
+    100% { transform: translate(-5vw,5vw) scale(0.95); }
+  }
+
+  /* grain overlay */
+  .grain {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ===== Nav ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem clamp(1rem, 4vw, 3rem);
+    backdrop-filter: blur(12px);
+    background: linear-gradient(180deg, rgba(10,1,24,0.85), rgba(10,1,24,0));
+  }
+  .logo {
+    font-family: var(--mono); font-weight: 700; font-size: 0.85rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .logo .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 12px var(--lime); animation: pulse 1.4s infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.5);opacity:.5} }
+  .nav-links { display: flex; gap: 1.6rem; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 0.8rem;
+    font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ===== Layout ===== */
+  section { padding: clamp(4rem, 9vw, 9rem) clamp(1.25rem, 5vw, 6rem); position: relative; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--cyan); margin-bottom: 1rem;
+    display: inline-block;
+  }
+
+  /* ===== Hero ===== */
+  .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 6rem; }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(3.5rem, 17vw, 15rem);
+    line-height: 0.82;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  .hero h1 .line { display: block; }
+  .hero h1 .grad {
+    background: linear-gradient(95deg, var(--magenta), var(--orange) 40%, var(--lime) 70%, var(--cyan));
+    background-size: 250% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: hue 8s linear infinite;
+  }
+  @keyframes hue { to { background-position: 250% 0; } }
+  .hero .sub {
+    margin-top: 1.6rem; max-width: 38ch;
+    font-size: clamp(1.05rem, 2.4vw, 1.5rem); color: var(--muted);
+  }
+  .hero .sub strong { color: var(--ink); font-weight: 800; }
+
+  .meta-row {
+    margin-top: 2.4rem; display: flex; flex-wrap: wrap; gap: 0.8rem 2rem; align-items: center;
+    font-family: var(--mono);
+  }
+  .badge {
+    border: 1px solid rgba(255,255,255,0.18); border-radius: 999px;
+    padding: 0.55rem 1.1rem; font-size: 0.82rem; letter-spacing: 0.05em;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .badge.pink { border-color: var(--magenta); color: var(--magenta); }
+  .badge.cyan { border-color: var(--cyan); color: var(--cyan); }
+
+  .cta {
+    display: inline-block; margin-top: 2.6rem;
+    font-family: var(--mono); font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; font-size: 0.95rem; text-decoration: none;
+    color: var(--bg); background: var(--lime);
+    padding: 1.1rem 2.2rem; border-radius: 999px;
+    box-shadow: 0 0 0 0 rgba(196,255,46,0.7);
+    transition: transform 0.2s, box-shadow 0.4s;
+    align-self: flex-start;
+  }
+  .cta:hover { transform: translateY(-3px); box-shadow: 0 0 35px 4px rgba(196,255,46,0.5); }
+
+  .scroll-hint {
+    position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.3em; color: var(--muted);
+    text-transform: uppercase; animation: bob 2s infinite;
+  }
+  @keyframes bob { 0%,100%{transform:translate(-50%,0)} 50%{transform:translate(-50%,8px)} }
+
+  /* ===== Marquee ticker ===== */
+  .ticker {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: var(--magenta);
+    color: var(--bg);
+    overflow: hidden; white-space: nowrap; padding: 0.7rem 0;
+  }
+  .ticker .track { display: inline-block; animation: scroll 24s linear infinite; }
+  .ticker span { font-family: var(--display); font-size: 1.6rem; text-transform: uppercase; padding: 0 1.5rem; }
+  .ticker .star { color: var(--bg); opacity: 0.5; }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ===== About ===== */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(2rem,5vw,5rem); align-items: center; }
+  @media (max-width: 820px) { .about-grid { grid-template-columns: 1fr; } }
+  .section-title {
+    font-family: var(--display); text-transform: uppercase;
+    font-size: clamp(2.4rem, 7vw, 5.5rem); line-height: 0.9; letter-spacing: -0.01em;
+    margin-bottom: 1.4rem;
+  }
+  .about-grid p { color: var(--muted); font-size: clamp(1rem,1.6vw,1.18rem); margin-bottom: 1.1rem; }
+  .about-grid p strong { color: var(--ink); }
+  .credo {
+    border-left: 3px solid var(--cyan); padding-left: 1.4rem;
+    font-family: var(--display); font-size: clamp(1.6rem,4vw,2.6rem);
+    text-transform: uppercase; line-height: 1.05; color: var(--ink);
+  }
+  .credo em { font-style: normal; color: var(--cyan); }
+
+  /* ===== Stats ===== */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  @media (max-width: 820px) { .stats { grid-template-columns: repeat(2,1fr); } }
+  .stat {
+    border: 1px solid rgba(255,255,255,0.12); border-radius: 18px;
+    padding: clamp(1.4rem,3vw,2.4rem); background: rgba(255,255,255,0.02);
+    transition: transform 0.3s, border-color 0.3s, background 0.3s;
+  }
+  .stat:hover { transform: translateY(-6px); border-color: var(--magenta); background: rgba(255,46,154,0.06); }
+  .stat .num {
+    font-family: var(--display); font-size: clamp(2.8rem,8vw,4.6rem); line-height: 1;
+    background: linear-gradient(180deg, var(--cyan), var(--violet));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .stat .label { font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 0.6rem; }
+
+  /* ===== Stages / Love Mobiles ===== */
+  .stages { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; }
+  @media (max-width: 900px) { .stages { grid-template-columns: 1fr; } }
+  .stage {
+    position: relative; border-radius: 20px; overflow: hidden;
+    padding: clamp(1.6rem,3vw,2.4rem); min-height: 240px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+    transition: transform 0.3s;
+  }
+  .stage:hover { transform: scale(1.02); }
+  .stage::before {
+    content: ""; position: absolute; inset: 0; opacity: 0.35; z-index: 0;
+    transition: opacity 0.3s;
+  }
+  .stage:hover::before { opacity: 0.6; }
+  .stage.s1::before { background: radial-gradient(circle at 30% 20%, var(--magenta), transparent 60%); }
+  .stage.s2::before { background: radial-gradient(circle at 70% 20%, var(--cyan), transparent 60%); }
+  .stage.s3::before { background: radial-gradient(circle at 30% 80%, var(--lime), transparent 60%); }
+  .stage.s4::before { background: radial-gradient(circle at 70% 80%, var(--orange), transparent 60%); }
+  .stage.s5::before { background: radial-gradient(circle at 50% 50%, var(--violet), transparent 60%); }
+  .stage.s6::before { background: radial-gradient(circle at 20% 50%, var(--magenta), transparent 60%); }
+  .stage > * { position: relative; z-index: 1; }
+  .stage .tag { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); opacity: 0.8; }
+  .stage h3 { font-family: var(--display); font-size: clamp(1.8rem,4vw,2.6rem); text-transform: uppercase; line-height: 0.95; margin: 0.4rem 0; }
+  .stage p { color: rgba(244,236,255,0.78); font-size: 0.92rem; }
+
+  /* ===== Programme timeline ===== */
+  .timeline { max-width: 760px; }
+  .slot {
+    display: grid; grid-template-columns: 130px 1fr; gap: 1.5rem;
+    padding: 1.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+    align-items: baseline;
+  }
+  @media (max-width: 560px){ .slot{ grid-template-columns: 90px 1fr; gap: 1rem; } }
+  .slot .time { font-family: var(--mono); font-weight: 700; color: var(--lime); font-size: 1rem; }
+  .slot .what h4 { font-family: var(--body); font-weight: 800; font-size: 1.15rem; margin-bottom: 0.2rem; }
+  .slot .what p { color: var(--muted); font-size: 0.92rem; }
+
+  /* ===== Info cards ===== */
+  .info-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; }
+  @media (max-width: 820px){ .info-grid{ grid-template-columns: 1fr; } }
+  .info {
+    border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 1.8rem;
+    background: rgba(255,255,255,0.02);
+  }
+  .info .ico { font-size: 1.8rem; margin-bottom: 0.8rem; }
+  .info h4 { font-family: var(--display); text-transform: uppercase; font-size: 1.4rem; margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  .info p { color: var(--muted); font-size: 0.95rem; }
+
+  /* ===== Final CTA ===== */
+  .finale { text-align: center; }
+  .finale h2 {
+    font-family: var(--display); text-transform: uppercase;
+    font-size: clamp(3rem, 13vw, 10rem); line-height: 0.85;
+    background: linear-gradient(95deg, var(--cyan), var(--magenta), var(--lime));
+    background-size: 200% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: hue 6s linear infinite;
+  }
+  .finale p { color: var(--muted); margin: 1.5rem auto 0; max-width: 40ch; font-size: 1.1rem; }
+
+  /* ===== Footer ===== */
+  footer {
+    padding: 3rem clamp(1.25rem,5vw,6rem); border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;
+    font-family: var(--mono); font-size: 0.78rem; color: var(--muted);
+  }
+  footer a { color: var(--cyan); text-decoration: none; }
+
+  /* ===== Scroll reveal ===== */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="mesh" aria-hidden="true">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="blob b4"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<nav>
+  <div class="logo"><span class="dot"></span> Street Parade · Zürich</div>
+  <div class="nav-links">
+    <a href="#about">Über</a>
+    <a href="#fakten">Fakten</a>
+    <a href="#buehnen">Love Mobiles</a>
+    <a href="#programm">Programm</a>
+    <a href="#info">Anreise</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <span class="eyebrow">Zürich · Schweiz · seit 1992</span>
+  <h1>
+    <span class="line">Street</span>
+    <span class="line grad">Parade</span>
+  </h1>
+  <p class="sub">Die <strong>grösste Techno-Party der Welt</strong> kehrt an den Zürichsee zurück. Eine Million Menschen, ein einziger Beat.</p>
+
+  <div class="meta-row">
+    <span class="badge pink">📅 Samstag, 8. August 2026</span>
+    <span class="badge cyan">📍 Seebecken Zürich</span>
+    <span class="badge">🎟️ Eintritt frei</span>
+  </div>
+
+  <a href="#about" class="cta">Tanz mit uns ↓</a>
+  <div class="scroll-hint">scroll</div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="track">
+    <span>Friede</span><span class="star">✦</span>
+    <span>Freiheit</span><span class="star">✦</span>
+    <span>Grosszügigkeit</span><span class="star">✦</span>
+    <span>Toleranz</span><span class="star">✦</span>
+    <span>Liebe</span><span class="star">✦</span>
+    <span>Friede</span><span class="star">✦</span>
+    <span>Freiheit</span><span class="star">✦</span>
+    <span>Grosszügigkeit</span><span class="star">✦</span>
+    <span>Toleranz</span><span class="star">✦</span>
+    <span>Liebe</span><span class="star">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <span class="eyebrow">Über die Parade</span>
+      <h2 class="section-title">Ein Fest für<br>alle</h2>
+      <p>Seit 1992 verwandelt die <strong>Street Parade</strong> das Zürcher Seebecken in den grössten Open-Air-Dancefloor der Welt. Was als kleine Demonstration für Liebe und Toleranz begann, ist heute ein globales Phänomen.</p>
+      <p>Riesige <strong>Love Mobiles</strong> rollen entlang des Quais, gefüllt mit DJs, tanzenden Menschen und donnernden Beats — von House über Techno bis Trance. Die Parade ist kostenlos, friedlich und offen für jede und jeden.</p>
+    </div>
+    <div class="reveal credo">
+      Für <em>Friede</em>, <em>Freiheit</em>, Grosszügigkeit &amp; <em>Toleranz</em>.
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="fakten">
+  <span class="eyebrow reveal">In Zahlen</span>
+  <h2 class="section-title reveal">Pure Energie</h2>
+  <div class="stats">
+    <div class="stat reveal"><div class="num" data-count="1000000" data-suffix="+">0</div><div class="label">Besucher:innen</div></div>
+    <div class="stat reveal"><div class="num" data-count="30" data-suffix="+">0</div><div class="label">Love Mobiles</div></div>
+    <div class="stat reveal"><div class="num" data-count="200" data-suffix="+">0</div><div class="label">DJs &amp; Acts</div></div>
+    <div class="stat reveal"><div class="num" data-count="1992">0</div><div class="label">Seit dem Jahr</div></div>
+  </div>
+</section>
+
+<!-- STAGES -->
+<section id="buehnen">
+  <span class="eyebrow reveal">Bühnen &amp; Love Mobiles</span>
+  <h2 class="section-title reveal">Wo der Bass<br>wohnt</h2>
+  <div class="stages">
+    <div class="stage s1 reveal"><span class="tag">Techno</span><h3>Hardcore Stage</h3><p>Brettharte Beats und treibende Kicks für die Unermüdlichen am Bürkliplatz.</p></div>
+    <div class="stage s2 reveal"><span class="tag">House</span><h3>Sunset Quai</h3><p>Groovige Vibes und Sonnenuntergang direkt am Wasser des Zürichsees.</p></div>
+    <div class="stage s3 reveal"><span class="tag">Trance</span><h3>Uplifting Deck</h3><p>Melodische Höhenflüge und Hände in der Luft, wenn der Drop kommt.</p></div>
+    <div class="stage s4 reveal"><span class="tag">Disco</span><h3>Funky Float</h3><p>Goldene Klassiker und tanzbare Grooves für gute Laune unterwegs.</p></div>
+    <div class="stage s5 reveal"><span class="tag">Drum &amp; Bass</span><h3>Bass Bunker</h3><p>Rasante Breakbeats und Sub-Frequenzen, die durch Mark und Bein gehen.</p></div>
+    <div class="stage s6 reveal"><span class="tag">Minimal</span><h3>Deep Lake</h3><p>Hypnotische Loops und reduzierte Klangwelten für die feine Klinge.</p></div>
+  </div>
+</section>
+
+<!-- PROGRAMME -->
+<section id="programm">
+  <span class="eyebrow reveal">Programm · 8. August 2026</span>
+  <h2 class="section-title reveal">Der Tag</h2>
+  <div class="timeline">
+    <div class="slot reveal"><div class="time">13:00</div><div class="what"><h4>Tore &amp; Stages öffnen</h4><p>Die Bühnen rund ums Seebecken nehmen den Betrieb auf.</p></div></div>
+    <div class="slot reveal"><div class="time">15:00</div><div class="what"><h4>Love Mobiles rollen los</h4><p>Der Korso startet seine Runde entlang des Zürcher Quais.</p></div></div>
+    <div class="slot reveal"><div class="time">18:00</div><div class="what"><h4>Golden Hour am See</h4><p>Sonnenuntergang trifft auf House — der magischste Moment des Tages.</p></div></div>
+    <div class="slot reveal"><div class="time">21:00</div><div class="what"><h4>Headliner Sets</h4><p>Die grossen Namen übernehmen die Hauptbühnen.</p></div></div>
+    <div class="slot reveal"><div class="time">24:00</div><div class="what"><h4>After-Parties</h4><p>Die Nacht geht in den Clubs der ganzen Stadt weiter.</p></div></div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section id="info">
+  <span class="eyebrow reveal">Gut zu wissen</span>
+  <h2 class="section-title reveal">Anreise &amp; Tipps</h2>
+  <div class="info-grid">
+    <div class="info reveal"><div class="ico">🚆</div><h4>ÖV nutzen</h4><p>Reise mit Zug, Tram oder Bus an — das Seebecken ist autofrei. Bahnhof Stadelhofen und Hauptbahnhof liegen nur wenige Schritte entfernt.</p></div>
+    <div class="info reveal"><div class="ico">💧</div><h4>Trinken &amp; Schützen</h4><p>Genug Wasser trinken, Sonnencreme nicht vergessen und auf einander aufpassen. Respekt hält die Party am Laufen.</p></div>
+    <div class="info reveal"><div class="ico">♻️</div><h4>Sauber feiern</h4><p>Abfall gehört in die Eimer. Hilf mit, den Zürichsee so schön zu halten, wie du ihn vorfindest.</p></div>
+  </div>
+</section>
+
+<!-- FINALE -->
+<section class="finale">
+  <h2 class="reveal">Wir<br>sehen<br>uns!</h2>
+  <p class="reveal">Komm vorbei, bring deine Freunde mit und tanz für eine offene, tolerante Welt. Die Strasse gehört der Liebe.</p>
+  <a href="#top" class="cta reveal" style="margin-top:2.5rem;">Nach oben ↑</a>
+</section>
+
+<footer>
+  <div>© 2026 Street Parade Zürich — Fan-Seite, inoffiziell.</div>
+  <div>Gestaltet mit 💜 am Zürichsee · <a href="#top">#StreetParade</a></div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  // Animated counters
+  const fmt = (n) => n.toLocaleString('de-CH');
+  const countUp = (el) => {
+    const target = +el.dataset.count;
+    const suffix = el.dataset.suffix || '';
+    const dur = 1600; const start = performance.now();
+    const step = (now) => {
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = Math.floor(eased * target);
+      el.textContent = (target >= 10000 ? fmt(val) : val) + (p === 1 ? suffix : '');
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { countUp(e.target); cio.unobserve(e.target); } });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.num[data-count]').forEach((el) => cio.observe(el));
+</script>
+</body>
+</html>
