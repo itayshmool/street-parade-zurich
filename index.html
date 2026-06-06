@@ -34,16 +34,26 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
   html { scroll-behavior: smooth; }
 
   body {
+    position: relative;
     background: var(--bg);
     color: var(--ink);
     font-family: var(--body);
-    overflow-x: hidden;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
+
+  /* Guard: nothing may exceed the viewport width on mobile */
+  section, header, nav, footer, .ticker { max-width: 100%; }
+  .stats, .stages, .gallery, .about-grid, .info-grid { min-width: 0; }
+  .stat, .stage, .gtile, .info, .slot { min-width: 0; }
 
   /* ===== Animated gradient mesh background ===== */
   .mesh {
@@ -202,6 +212,7 @@
   /* ===== Stats ===== */
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
   @media (max-width: 820px) { .stats { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 420px) { .stats { grid-template-columns: 1fr; } }
   .stat {
     border: 1px solid rgba(255,255,255,0.12); border-radius: 18px;
     padding: clamp(1.4rem,3vw,2.4rem); background: rgba(255,255,255,0.02);
@@ -209,9 +220,10 @@
   }
   .stat:hover { transform: translateY(-6px); border-color: var(--magenta); background: rgba(255,46,154,0.06); }
   .stat .num {
-    font-family: var(--display); font-size: clamp(2.8rem,8vw,4.6rem); line-height: 1;
+    font-family: var(--display); font-size: clamp(2.2rem,7vw,4.6rem); line-height: 1;
     background: linear-gradient(180deg, var(--cyan), var(--violet));
     -webkit-background-clip: text; background-clip: text; color: transparent;
+    white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: clip;
   }
   .stat .label { font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 0.6rem; }
 
