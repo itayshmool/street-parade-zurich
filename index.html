@@ -125,7 +125,21 @@
   }
 
   /* ===== Hero ===== */
-  .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 6rem; }
+  .hero {
+    min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 6rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: -1;
+    background: url('images/hero-desktop.jpg') center/cover no-repeat;
+  }
+  .hero-bg::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,1,24,0.72) 0%, rgba(10,1,24,0.45) 40%, rgba(10,1,24,0.78) 100%);
+  }
+  @media (max-width: 720px) {
+    .hero-bg { background-image: url('images/hero-mobile.jpg'); }
+  }
   .hero h1 {
     font-family: var(--display);
     font-size: clamp(3.5rem, 17vw, 15rem);
@@ -305,8 +319,8 @@
   .gtile.wide { grid-column: span 2; }
   .gtile.tall { grid-row: span 2; }
   @media (max-width: 520px){ .gtile.wide, .gtile.tall { grid-column: auto; grid-row: auto; } }
-  .gtile svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; transition: transform 0.6s ease; }
-  .gtile:hover svg { transform: scale(1.08); }
+  .gtile img, .gtile svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 0.6s ease; }
+  .gtile:hover img, .gtile:hover svg { transform: scale(1.08); }
   .gtile .cap {
     position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
     padding: 1.4rem 1.1rem 0.9rem;
@@ -332,7 +346,7 @@
     border-radius: 22px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15);
     box-shadow: 0 30px 80px rgba(0,0,0,0.6);
   }
-  .lightbox .frame svg { width: 100%; height: 100%; display: block; }
+  .lightbox .frame svg, .lightbox .frame img { width: 100%; height: 100%; display: block; object-fit: cover; }
   .lightbox .lbcap {
     position: absolute; left: 0; right: 0; bottom: 0; padding: 1.6rem 1.4rem;
     background: linear-gradient(0deg, rgba(6,0,15,0.95), transparent);
@@ -376,12 +390,12 @@
     <a href="#fakten">Fakten</a>
     <a href="#buehnen">Love Mobiles</a>
     <a href="#galerie">Galerie</a>
-    <a href="#programm">Programm</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
   <span class="eyebrow">Zürich · Schweiz · seit 1992</span>
   <h1>
     <span class="line">Street</span>
@@ -466,210 +480,37 @@
 
     <!-- 1 — Crowd am See (wide) -->
     <figure class="gtile wide reveal" data-cap="Tausende am Seebecken" data-sub="Sonnenuntergang über dem Zürichsee">
-      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Tanzende Menge am Zürichsee bei Sonnenuntergang">
-        <defs>
-          <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#2a0a4a"/><stop offset="0.45" stop-color="#ff2e9a"/>
-            <stop offset="0.7" stop-color="#ff6b1a"/><stop offset="1" stop-color="#ffd166"/>
-          </linearGradient>
-          <linearGradient id="lake1" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#ffb347" stop-opacity="0.7"/><stop offset="1" stop-color="#1a0533"/>
-          </linearGradient>
-        </defs>
-        <rect width="800" height="600" fill="url(#sky1)"/>
-        <circle cx="400" cy="340" r="90" fill="#fff3c4" opacity="0.95"/>
-        <rect y="360" width="800" height="240" fill="url(#lake1)"/>
-        <g fill="#ffe9b0" opacity="0.5">
-          <rect x="360" y="380" width="80" height="6"/><rect x="350" y="400" width="100" height="5"/>
-          <rect x="340" y="420" width="120" height="4"/><rect x="330" y="440" width="140" height="4"/>
-        </g>
-        <g fill="#15032b">
-          <path d="M0 470 q40 -30 80 0 t80 0 80 0 80 0 80 0 80 0 80 0 80 0 80 0 v130 H0 Z"/>
-          <!-- crowd silhouettes with raised hands -->
-          <g>
-            <path d="M60 470 v-40 M52 445 l8 -18 8 18 M40 460 q20 -25 40 0 v25 H40 Z"/>
-            <path d="M150 472 v-46 M142 446 l8 -20 8 20 M128 462 q22 -28 44 0 v26 h-44 Z"/>
-            <path d="M250 470 v-38 M243 446 l7 -16 7 16 M232 460 q18 -22 36 0 v24 h-36 Z"/>
-            <path d="M360 472 v-50 M351 448 l9 -22 9 22 M338 462 q22 -30 44 0 v26 h-44 Z"/>
-            <path d="M470 470 v-40 M462 445 l8 -18 8 18 M450 460 q20 -25 40 0 v25 h-40 Z"/>
-            <path d="M580 472 v-46 M572 446 l8 -20 8 20 M558 462 q22 -28 44 0 v26 h-44 Z"/>
-            <path d="M690 470 v-38 M683 446 l7 -16 7 16 M672 460 q18 -22 36 0 v24 h-36 Z"/>
-          </g>
-        </g>
-      </svg>
+      <img src="images/crowd-sunset.jpg" alt="Tanzende Menge am Zürichsee bei Sonnenuntergang" loading="lazy" />
       <figcaption class="cap"><h4>Tausende am See</h4><span class="plus">＋</span></figcaption>
     </figure>
 
     <!-- 2 — Love Mobile (tall) -->
     <figure class="gtile tall reveal" data-cap="Love Mobile" data-sub="Rollende Bässe entlang des Quais">
-      <svg viewBox="0 0 600 800" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Love Mobile Truck mit Lautsprechern und Lichtern">
-        <defs>
-          <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#1a0540"/><stop offset="1" stop-color="#3a0a6b"/>
-          </linearGradient>
-          <radialGradient id="glow2" cx="0.5" cy="0.4" r="0.6">
-            <stop offset="0" stop-color="#00f0ff" stop-opacity="0.55"/><stop offset="1" stop-color="#00f0ff" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <rect width="600" height="800" fill="url(#bg2)"/>
-        <rect width="600" height="800" fill="url(#glow2)"/>
-        <!-- confetti -->
-        <g opacity="0.85">
-          <rect x="80" y="90" width="10" height="10" fill="#c4ff2e" transform="rotate(20 85 95)"/>
-          <rect x="500" y="140" width="9" height="9" fill="#ff2e9a" transform="rotate(45 504 144)"/>
-          <rect x="300" y="60" width="8" height="8" fill="#00f0ff"/>
-          <circle cx="180" cy="170" r="5" fill="#ffd166"/><circle cx="430" cy="80" r="5" fill="#c4ff2e"/>
-        </g>
-        <!-- truck body -->
-        <rect x="90" y="430" width="420" height="220" rx="14" fill="#0c0420" stroke="#00f0ff" stroke-width="3"/>
-        <!-- speaker stacks -->
-        <g fill="#160a2e" stroke="#ff2e9a" stroke-width="2.5">
-          <rect x="120" y="300" width="150" height="130" rx="6"/>
-          <rect x="330" y="300" width="150" height="130" rx="6"/>
-        </g>
-        <g fill="#ff2e9a">
-          <circle cx="160" cy="345" r="20"/><circle cx="230" cy="345" r="14"/>
-          <circle cx="160" cy="395" r="14"/><circle cx="230" cy="395" r="20"/>
-          <circle cx="370" cy="345" r="20"/><circle cx="440" cy="345" r="14"/>
-          <circle cx="370" cy="395" r="14"/><circle cx="440" cy="395" r="20"/>
-        </g>
-        <!-- dancers on top -->
-        <g fill="#c4ff2e">
-          <path d="M210 300 v-46 M202 274 l8 -22 8 22 M188 290 q22 -30 44 0 v22 h-44 Z"/>
-          <path d="M300 300 v-52 M291 274 l9 -24 9 24 M278 290 q22 -32 44 0 v22 h-44 Z"/>
-          <path d="M390 300 v-46 M382 274 l8 -22 8 22 M368 290 q22 -30 44 0 v22 h-44 Z"/>
-        </g>
-        <!-- wheels -->
-        <circle cx="180" cy="660" r="42" fill="#0a0418" stroke="#8a2eff" stroke-width="6"/>
-        <circle cx="420" cy="660" r="42" fill="#0a0418" stroke="#8a2eff" stroke-width="6"/>
-        <text x="300" y="560" text-anchor="middle" font-family="Anton, sans-serif" font-size="52" fill="#00f0ff">LOVE</text>
-      </svg>
+      <img src="images/love-mobile.jpg" alt="Love Mobile Truck mit Lautsprechern und Lichtern" loading="lazy" />
       <figcaption class="cap"><h4>Love Mobile</h4><span class="plus">＋</span></figcaption>
     </figure>
 
     <!-- 3 — Laser Night -->
     <figure class="gtile reveal" data-cap="Laser &amp; Beats" data-sub="Wenn die Nacht über dem Quai explodiert">
-      <svg viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Laserstrahlen in der Nacht">
-        <defs>
-          <radialGradient id="night3" cx="0.5" cy="0.9" r="1">
-            <stop offset="0" stop-color="#2a0a55"/><stop offset="1" stop-color="#05010f"/>
-          </radialGradient>
-        </defs>
-        <rect width="600" height="600" fill="url(#night3)"/>
-        <g opacity="0.9"><circle cx="80" cy="70" r="2" fill="#fff"/><circle cx="200" cy="50" r="1.6" fill="#fff"/><circle cx="500" cy="90" r="2.2" fill="#fff"/><circle cx="380" cy="40" r="1.5" fill="#fff"/><circle cx="540" cy="200" r="1.8" fill="#fff"/></g>
-        <g stroke-linecap="round" opacity="0.85">
-          <line x1="300" y1="600" x2="40" y2="120" stroke="#00f0ff" stroke-width="4"/>
-          <line x1="300" y1="600" x2="170" y2="60" stroke="#ff2e9a" stroke-width="4"/>
-          <line x1="300" y1="600" x2="300" y2="40" stroke="#c4ff2e" stroke-width="4"/>
-          <line x1="300" y1="600" x2="430" y2="60" stroke="#ff2e9a" stroke-width="4"/>
-          <line x1="300" y1="600" x2="560" y2="120" stroke="#00f0ff" stroke-width="4"/>
-        </g>
-        <circle cx="300" cy="600" r="40" fill="#fff" opacity="0.9"/>
-        <path d="M0 540 q60 -20 120 0 t120 0 120 0 120 0 120 0 v60 H0 Z" fill="#07010f"/>
-      </svg>
+      <img src="images/laser-night.jpg" alt="Laserstrahlen in der Nacht" loading="lazy" />
       <figcaption class="cap"><h4>Laser &amp; Beats</h4><span class="plus">＋</span></figcaption>
     </figure>
 
     <!-- 4 — Konfetti -->
     <figure class="gtile reveal" data-cap="Konfetti-Regen" data-sub="Farbe für eine tolerante Welt">
-      <svg viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Konfetti-Regen in Neonfarben">
-        <defs>
-          <linearGradient id="bg4" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#ff2e9a"/><stop offset="0.5" stop-color="#8a2eff"/><stop offset="1" stop-color="#00f0ff"/>
-          </linearGradient>
-        </defs>
-        <rect width="600" height="600" fill="url(#bg4)"/>
-        <g>
-          <rect x="60" y="80" width="16" height="16" fill="#c4ff2e" transform="rotate(25 68 88)"/>
-          <rect x="160" y="40" width="14" height="14" fill="#fff" transform="rotate(50 167 47)"/>
-          <rect x="260" y="120" width="18" height="18" fill="#ffd166" transform="rotate(15 269 129)"/>
-          <rect x="360" y="60" width="14" height="14" fill="#05010f" transform="rotate(40 367 67)"/>
-          <rect x="470" y="100" width="16" height="16" fill="#c4ff2e" transform="rotate(60 478 108)"/>
-          <rect x="120" y="220" width="15" height="15" fill="#fff" transform="rotate(30 127 227)"/>
-          <rect x="320" y="260" width="18" height="18" fill="#ffd166" transform="rotate(20 329 269)"/>
-          <rect x="500" y="240" width="14" height="14" fill="#05010f" transform="rotate(45 507 247)"/>
-          <rect x="80" y="360" width="16" height="16" fill="#c4ff2e" transform="rotate(35 88 368)"/>
-          <rect x="240" y="400" width="15" height="15" fill="#fff" transform="rotate(55 247 407)"/>
-          <rect x="420" y="380" width="18" height="18" fill="#ffd166" transform="rotate(25 429 389)"/>
-          <rect x="180" y="500" width="14" height="14" fill="#05010f" transform="rotate(50 187 507)"/>
-          <rect x="360" y="520" width="16" height="16" fill="#c4ff2e" transform="rotate(40 368 528)"/>
-          <circle cx="200" cy="160" r="8" fill="#05010f"/><circle cx="420" cy="200" r="8" fill="#fff"/>
-          <circle cx="140" cy="460" r="8" fill="#ffd166"/><circle cx="480" cy="480" r="8" fill="#05010f"/>
-        </g>
-      </svg>
+      <img src="images/confetti.jpg" alt="Konfetti-Regen in Neonfarben" loading="lazy" />
       <figcaption class="cap"><h4>Konfetti-Regen</h4><span class="plus">＋</span></figcaption>
     </figure>
 
     <!-- 5 — DJ Deck -->
     <figure class="gtile reveal" data-cap="DJ am Deck" data-sub="Der Beat, der alle vereint">
-      <svg viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="DJ hinter dem Mischpult">
-        <defs>
-          <radialGradient id="bg5" cx="0.5" cy="0.3" r="0.9">
-            <stop offset="0" stop-color="#3a0a6b"/><stop offset="1" stop-color="#0a0118"/>
-          </radialGradient>
-        </defs>
-        <rect width="600" height="600" fill="url(#bg5)"/>
-        <!-- soundwave -->
-        <g stroke="#00f0ff" stroke-width="5" stroke-linecap="round" opacity="0.8">
-          <line x1="60" y1="160" x2="60" y2="220"/><line x1="100" y1="130" x2="100" y2="250"/>
-          <line x1="140" y1="170" x2="140" y2="210"/><line x1="180" y1="110" x2="180" y2="270"/>
-          <line x1="420" y1="110" x2="420" y2="270"/><line x1="460" y1="170" x2="460" y2="210"/>
-          <line x1="500" y1="130" x2="500" y2="250"/><line x1="540" y1="160" x2="540" y2="220"/>
-        </g>
-        <!-- DJ silhouette -->
-        <circle cx="300" cy="250" r="48" fill="#ff2e9a"/>
-        <path d="M210 420 q90 -130 180 0 Z" fill="#ff2e9a"/>
-        <!-- headphones -->
-        <path d="M252 250 a48 48 0 0 1 96 0" fill="none" stroke="#c4ff2e" stroke-width="10"/>
-        <rect x="244" y="246" width="18" height="34" rx="6" fill="#c4ff2e"/>
-        <rect x="338" y="246" width="18" height="34" rx="6" fill="#c4ff2e"/>
-        <!-- decks -->
-        <rect x="140" y="420" width="320" height="120" rx="10" fill="#0c0420" stroke="#8a2eff" stroke-width="3"/>
-        <circle cx="220" cy="480" r="34" fill="#160a2e" stroke="#00f0ff" stroke-width="3"/>
-        <circle cx="380" cy="480" r="34" fill="#160a2e" stroke="#00f0ff" stroke-width="3"/>
-        <circle cx="220" cy="480" r="6" fill="#00f0ff"/><circle cx="380" cy="480" r="6" fill="#00f0ff"/>
-      </svg>
+      <img src="images/dj-deck.jpg" alt="DJ hinter dem Mischpult" loading="lazy" />
       <figcaption class="cap"><h4>DJ am Deck</h4><span class="plus">＋</span></figcaption>
     </figure>
 
     <!-- 6 — Skyline (wide) -->
     <figure class="gtile wide reveal" data-cap="Zürich bei Nacht" data-sub="Die Stadt tanzt bis in den Morgen">
-      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Zürcher Skyline bei Nacht mit Neonlicht">
-        <defs>
-          <linearGradient id="sky6" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#05010f"/><stop offset="0.6" stop-color="#1a0540"/><stop offset="1" stop-color="#3a0a6b"/>
-          </linearGradient>
-        </defs>
-        <rect width="800" height="600" fill="url(#sky6)"/>
-        <circle cx="650" cy="130" r="46" fill="#f4ecff" opacity="0.9"/>
-        <circle cx="668" cy="120" r="46" fill="#1a0540"/>
-        <g opacity="0.9"><circle cx="120" cy="80" r="2" fill="#fff"/><circle cx="300" cy="60" r="1.6" fill="#fff"/><circle cx="450" cy="100" r="2" fill="#fff"/><circle cx="540" cy="50" r="1.5" fill="#fff"/></g>
-        <!-- skyline silhouette -->
-        <g fill="#0a0320">
-          <rect x="0" y="380" width="80" height="220"/>
-          <rect x="90" y="320" width="60" height="280"/>
-          <rect x="160" y="420" width="70" height="180"/>
-          <!-- church towers (Grossmünster vibe) -->
-          <rect x="250" y="300" width="40" height="300"/><path d="M250 300 h40 l-20 -40 Z" fill="#0a0320"/>
-          <rect x="300" y="300" width="40" height="300"/><path d="M300 300 h40 l-20 -40 Z" fill="#0a0320"/>
-          <rect x="360" y="400" width="90" height="200"/>
-          <rect x="460" y="340" width="60" height="260"/>
-          <!-- thin tower -->
-          <rect x="540" y="240" width="26" height="360"/><path d="M540 240 h26 l-13 -50 Z"/>
-          <rect x="590" y="400" width="100" height="200"/>
-          <rect x="700" y="360" width="100" height="240"/>
-        </g>
-        <!-- neon windows -->
-        <g>
-          <rect x="20" y="410" width="8" height="8" fill="#c4ff2e"/><rect x="50" y="450" width="8" height="8" fill="#00f0ff"/>
-          <rect x="110" y="360" width="8" height="8" fill="#ff2e9a"/><rect x="120" y="420" width="8" height="8" fill="#ffd166"/>
-          <rect x="380" y="440" width="8" height="8" fill="#00f0ff"/><rect x="410" y="480" width="8" height="8" fill="#c4ff2e"/>
-          <rect x="475" y="380" width="8" height="8" fill="#ff2e9a"/><rect x="610" y="440" width="8" height="8" fill="#00f0ff"/>
-          <rect x="720" y="400" width="8" height="8" fill="#c4ff2e"/><rect x="760" y="440" width="8" height="8" fill="#ff2e9a"/>
-        </g>
-        <!-- lake reflection -->
-        <rect y="560" width="800" height="40" fill="#00f0ff" opacity="0.08"/>
-      </svg>
+      <img src="images/zurich-night.jpg" alt="Zürcher Skyline bei Nacht mit Neonlicht" loading="lazy" />
       <figcaption class="cap"><h4>Zürich bei Nacht</h4><span class="plus">＋</span></figcaption>
     </figure>
 
@@ -687,18 +528,6 @@
   <button class="lb-nav next" id="lbNext" aria-label="Nächstes Bild">›</button>
 </div>
 
-<!-- PROGRAMME -->
-<section id="programm">
-  <span class="eyebrow reveal">Programm · 8. August 2026</span>
-  <h2 class="section-title reveal">Der Tag</h2>
-  <div class="timeline">
-    <div class="slot reveal"><div class="time">13:00</div><div class="what"><h4>Tore &amp; Stages öffnen</h4><p>Die Bühnen rund ums Seebecken nehmen den Betrieb auf.</p></div></div>
-    <div class="slot reveal"><div class="time">15:00</div><div class="what"><h4>Love Mobiles rollen los</h4><p>Der Korso startet seine Runde entlang des Zürcher Quais.</p></div></div>
-    <div class="slot reveal"><div class="time">18:00</div><div class="what"><h4>Golden Hour am See</h4><p>Sonnenuntergang trifft auf House — der magischste Moment des Tages.</p></div></div>
-    <div class="slot reveal"><div class="time">21:00</div><div class="what"><h4>Headliner Sets</h4><p>Die grossen Namen übernehmen die Hauptbühnen.</p></div></div>
-    <div class="slot reveal"><div class="time">24:00</div><div class="what"><h4>After-Parties</h4><p>Die Nacht geht in den Clubs der ganzen Stadt weiter.</p></div></div>
-  </div>
-</section>
 
 <!-- FINALE -->
 <section class="finale">
@@ -751,7 +580,8 @@
   const show = (i) => {
     current = (i + tiles.length) % tiles.length;
     const t = tiles[current];
-    stage.innerHTML = t.querySelector('svg').outerHTML;
+    const media = t.querySelector('img') || t.querySelector('svg');
+    stage.innerHTML = media.outerHTML;
     cap.innerHTML = t.dataset.cap + '<span>' + (t.dataset.sub || '') + '</span>';
   };
   const open = (i) => { show(i); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; };
